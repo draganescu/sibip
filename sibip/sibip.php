@@ -1,8 +1,5 @@
 <?php 
 function run() {
-
-    extract(load_configuration());
-
     if ($_GET['mailgun'] == 'endpointcall') {
         run_api();
     } else {
@@ -11,19 +8,24 @@ function run() {
 }
 
 function load_configuration() {
+    $config = array();
     if (!file_exists('../configuration/database.php')) {
         exit('configuration/database.php is required');
     } else {
-        require 'configuration/database.php';
+        foreach (glob('../configuration/*.php') as $filename) {
+            $config = array_merge($config, require_once $filename);
+        }
     }
+    return $config;
 }
 
 function run_api() {
     require 'api.php';
-    handle();
+    handle(load_configuration());
 }
 
 function run_web() {
+    echo $test;
     require 'web.php';
-    serve();
+    serve(load_configuration());
 }
