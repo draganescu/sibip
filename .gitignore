@@ -1,0 +1,13 @@
+
+# generic folders
+/vendor
+/node_modules
+/configuration
+
+# mac crap
+.DS_Store
+
+# config files
+composer.lock
+composer.phar
+sftp-config.json
