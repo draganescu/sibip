@@ -25,7 +25,6 @@ function run_api() {
 }
 
 function run_web() {
-    echo $test;
     require 'web.php';
     serve(load_configuration());
 }
