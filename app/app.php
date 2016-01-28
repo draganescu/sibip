@@ -10,8 +10,10 @@ function run($action = null, $command = null, $data = null) {
             run('web', 'serve');
         }
     }
+
+    $function = "\".$action."\".$command";
     
-    if (!function_exists("\$action\$command")) {
+    if (!function_exists($function)) {
         if (is_file('../app/'.$action.'.php')) {
             require '../app/'.$action.'.php';
         } else {
@@ -19,10 +21,10 @@ function run($action = null, $command = null, $data = null) {
         }
     }
 
-    if (function_exists("\$action\$command")) {
-        "\\".$action."\\".$command($data);
+    if (function_exists($function)) {
+        $function($data);
     } else {
-        die('Undefined command '.$command);
+        die('Undefined command '.$function);
     }
 
 }
