@@ -35,11 +35,11 @@ function render($view) {
 
 function index_page() {
 
-	if (\app\run('input', 'post', 'email')) {
+	// if (\app\run('input', 'post', 'email')) {
 		$string = \app\run('input', 'generateRandomString');
 		echo $string;
 		die;
-	}
+	// }
 
 	return array(
 		'today' => date("Y-m-d")
