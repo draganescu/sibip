@@ -1,7 +1,7 @@
 <?php
 namespace configuration;
 
-function load($data) {
+function load() {
     $config = array();    
     foreach (glob('../configuration/*.php') as $filename) {
         $config = array_merge($config, require_once $filename);
@@ -9,7 +9,7 @@ function load($data) {
     return $config;   
 }
 
-function connect($data) {
+function connect() {
     extract(\configuration\load());
     if (empty($dsn) || empty($user) || empty($password) || empty($frozen)) {
         die("Please check the configuration\database.php file");
