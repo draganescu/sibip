@@ -3,8 +3,11 @@ namespace configuration;
 
 function load() {
     $config = array();    
-    foreach (glob('../configuration/*.php') as $filename) {
-        $config = array_merge($config, require_once $filename);
+    foreach (glob(__DIR__.DIRECTORY_SEPARATOR.'configuration'.DIRECTORY_SEPARATOR.'*.php') as $filename) {
+        $data = require_once $filename;
+        if(is_array($data)) {
+            $config = array_merge($config, $data);
+        }
     }
     return $config;   
 }
