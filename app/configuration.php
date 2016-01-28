@@ -5,7 +5,7 @@ function load() {
     $config = array();    
     foreach (glob(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'configuration'.DIRECTORY_SEPARATOR.'*.php') as $filename) {
         echo $filename;
-        $data = require_once $filename;
+        $data = include $filename;
         var_dump($data);
         if(is_array($data)) {
             $config = array_merge($config, $data);
