@@ -1,5 +1,6 @@
 <?php
 
-function serve($config) {
+function serve() {
+	$config = run('configuration', 'load');
     echo "it works, pushed";
 }

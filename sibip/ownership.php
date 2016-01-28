@@ -1,5 +1,5 @@
 <?php
 
-function check_owner() {
-    
+function check() {
+	
 }

@@ -1,30 +1,25 @@
 <?php 
-function run() {
-    if ($_GET['mailgun'] == 'endpointcall') {
-        run_api();
-    } else {
-        run_web();
-    }
-}
 
-function load_configuration() {
-    $config = array();
-    if (!file_exists('../configuration/database.php')) {
-        exit('configuration/database.php is required');
-    } else {
-        foreach (glob('../configuration/*.php') as $filename) {
-            $config = array_merge($config, require_once $filename);
+function run($action = null, $command = null, $data = null) {
+
+    if (is_null($action) && is_null($command) && is_null($data)) {
+        if (run('input', 'get', 'api')) {
+            run ('api', 'handle');
+        } else {
+            run('web', 'serve');
         }
     }
-    return $config;
-}
 
-function run_api() {
-    require 'api.php';
-    handle(load_configuration());
-}
+    if (is_file($action.'.php')) {
+        require $action.'.php';
+    } else {
+        die('Undefined file '.$action);
+    }
 
-function run_web() {
-    require 'web.php';
-    serve(load_configuration());
+    if (function_exists($command)) {
+        $command($data);
+    } else {
+        die('Undefined command '.$command);
+    }
+
 }

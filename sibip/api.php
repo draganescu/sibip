@@ -1,6 +1,6 @@
 <?php
 
-private function authenticate_mailgun() 
+private function verify_signature() 
 {
     if (empty($_POST['timestamp']) || empty($_POST['token']) || empty($_POST['signature'])) {
         exit('fuck off');
@@ -11,4 +11,8 @@ private function authenticate_mailgun()
         return true;
     }
     die('fuck off');
+}
+
+function handle() {
+	
 }
