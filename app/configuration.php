@@ -15,8 +15,7 @@ function load() {
 
 function connect() {
     $config = \configuration\load();
-
-    if (empty($config['dsn']) || empty($config['user']) || empty($config['password']) || empty($config['frozen'])) {
+    if (empty($config['dsn']) || empty($config['user']) || empty($config['password'])) {
         die("Please check the configuration\database.php file");
     }
 	R::addDatabase('db',$config['dsn'],$config['user'],$config['password'],$config['frozen']);
