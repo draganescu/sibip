@@ -35,6 +35,6 @@ function render($view) {
 
 function index_page() {
 	return array(
-		'today' = date("Y-m-d")
+		'today' => date("Y-m-d")
 	);
 }
