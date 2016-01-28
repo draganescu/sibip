@@ -14,6 +14,8 @@ function load() {
 }
 
 function connect() {
+    use \RedBeanPHP\R;
+    
     $config = \configuration\load();
     if (empty($config['dsn']) || empty($config['user']) || empty($config['password'])) {
         die("Please check the configuration\database.php file");
