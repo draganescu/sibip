@@ -1,5 +1,6 @@
 <?php 
 require '../vendor/autoload.php';
-$sibip = require '../sibip/sibip.php';
+require '../app/app.php';
+use app;
 
-run();
+\app\run();

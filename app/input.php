@@ -1,4 +1,5 @@
 <?php
+namespace input;
 
 function get($name) {
 	return $_GET[$name];

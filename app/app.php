@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace app;
 
 function run($action = null, $command = null, $data = null) {
 
@@ -9,15 +10,18 @@ function run($action = null, $command = null, $data = null) {
             run('web', 'serve');
         }
     }
-
-    if (is_file($action.'.php')) {
-        require $action.'.php';
-    } else {
-        die('Undefined file '.$action);
+    
+    if (!function_exists("\$action\$command")) {
+        if (is_file('../app/'.$action.'.php')) {
+            require $action.'.php';
+            use $action;
+        } else {
+            die('Undefined action '.$action);
+        }
     }
 
     if (function_exists($command)) {
-        $command($data);
+        "\\".$action."\\".$command($data);
     } else {
         die('Undefined command '.$command);
     }

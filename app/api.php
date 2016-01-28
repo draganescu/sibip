@@ -1,4 +1,6 @@
 <?php
+namespace api;
+
 
 private function verify_signature() 
 {

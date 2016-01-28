@@ -1,4 +1,5 @@
 <?php
+namespace configuration;
 
 function load() {
     $config = array();
