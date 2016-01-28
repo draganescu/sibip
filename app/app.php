@@ -1,6 +1,9 @@
 <?php
 namespace app;
 
+use '\Mailgun\Mailgun';
+use '\RedBeanPHP\R';
+
 function run($action = null, $command = null, $data = null) {
 
     if (is_null($action) && is_null($command) && is_null($data)) {
@@ -9,7 +12,7 @@ function run($action = null, $command = null, $data = null) {
         } else {
             run('web', 'serve');
         }
-        
+
         exit;
     }
 

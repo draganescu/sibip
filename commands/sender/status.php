@@ -1,5 +1,6 @@
 <?php
+namespace sender;
 
-function execute() {
+function status() {
 	
 }

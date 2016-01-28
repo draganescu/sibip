@@ -2,7 +2,7 @@
 namespace api;
 
 
-private function verify_signature() 
+function verify_signature() 
 {
     if (empty($_POST['timestamp']) || empty($_POST['token']) || empty($_POST['signature'])) {
         exit('fuck off');
@@ -12,9 +12,19 @@ private function verify_signature()
     if ($code == $_POST['signature']) {
         return true;
     }
-    die('fuck off');
+    die('nope');
 }
 
 function handle() {
-	
+	\api\verify_signature();
+    
+    $command = \command\find();
+    $user = \ownership\find(); // check if from or to is a user
+
+    if (!empty($user) && empty($command)) {
+        \command\store();
+    } else {
+        \command\call($command, $user);
+    }
+    
 }
