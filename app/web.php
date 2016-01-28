@@ -1,5 +1,7 @@
 <?php
 namespace web;
+use \RedBeanPHP\R;
+use \Mailgun\Mailgun;
 
 function serve($data) {
 	\app\run('configuration', 'connect');
