@@ -11,7 +11,7 @@ function run($action = null, $command = null, $data = null) {
         }
     }
 
-    $function = "\".$action."\".$command";
+    $function = "\\".$action."\\".$command;
     
     if (!function_exists($function)) {
         if (is_file('../app/'.$action.'.php')) {
