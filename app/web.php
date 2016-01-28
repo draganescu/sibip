@@ -18,7 +18,7 @@ function view($action) {
 	if (!file_exists($view)) {
 		$view = $path.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'404.phtml';
 	} else {
-		$function = $action.'_page';
+		$function = "\\web\\".$action.'_page';
 		extract($function());
 	}
 
