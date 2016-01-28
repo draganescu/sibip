@@ -19,7 +19,7 @@ function run($action = null, $command = null, $data = null) {
         }
     }
 
-    if (function_exists($command)) {
+    if (function_exists("\$action\$command")) {
         "\\".$action."\\".$command($data);
     } else {
         die('Undefined command '.$command);
