@@ -1,8 +1,8 @@
 <?php
 namespace app;
 
-use '\Mailgun\Mailgun';
-use '\RedBeanPHP\R';
+use \Mailgun\Mailgun;
+use \RedBeanPHP\R;
 
 function run($action = null, $command = null, $data = null) {
 
