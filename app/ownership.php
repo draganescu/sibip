@@ -7,4 +7,6 @@ function check($data) {
 
 function find($data) {
 	
+
+	return 1;
 }

@@ -4,7 +4,7 @@ namespace app;
 function run($action = null, $command = null, $data = null) {
 
     if (is_null($action) && is_null($command) && is_null($data)) {
-        if (run('input', 'get', 'api')) {
+        if (run('input', 'get', 'action') == 'api') {
             return run ('api', 'handle');
         } else {
             return run('web', 'serve');
@@ -22,7 +22,10 @@ function run($action = null, $command = null, $data = null) {
     }
 
     if (function_exists($function)) {
-        return $function($data);
+        if (!is_array($data)) {
+            $data = array($data);
+        }
+        return call_user_func_array($function, $data);
     } else {
         die('Undefined command '.$function);
     }

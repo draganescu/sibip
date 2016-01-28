@@ -1,14 +1,18 @@
 <?php
 namespace command;
+use \RedBeanPHP\R;
+use \Mailgun\Mailgun;
 
 function find() {
 	$action = null;
 	$subject = \app\run('input', 'post', 'subject');
-	$tokens = explode(" ", $subject);
-	foreach ($actions as $key => $action) {
-		foreach ($tokens as $key => $token) {
-			if ($token == $action) {
-				return $action;
+	if(!empty($subject)) {
+		$tokens = explode(" ", $subject);
+		foreach ($actions as $key => $action) {
+			foreach ($tokens as $key => $token) {
+				if ($token == $action) {
+					return $action;
+				}
 			}
 		}
 	}
