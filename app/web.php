@@ -11,14 +11,14 @@ function serve($data) {
     render($view);
 }
 
-function view($view) {
+function view($action) {
 	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates';
-	$view = $path.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.$view.'.phtml';
+	$view = $path.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.$action.'.phtml';
 
 	if (!file_exists($view)) {
 		$view = $path.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'404.phtml';
 	} else {
-		$function = $view.'_page';
+		$function = $action.'_page';
 		extract($function());
 	}
 
