@@ -9,6 +9,8 @@ function run($action = null, $command = null, $data = null) {
         } else {
             run('web', 'serve');
         }
+        
+        exit;
     }
 
     $function = "\\".$action."\\".$command;
