@@ -1,25 +1,19 @@
 <?php
 namespace configuration;
 
-$config = null;
-
 function load($data) {
-    if (!empty(\configuration\$config)) {
-        return \configuration\$config;
+    $config = array();    
+    foreach (glob('../configuration/*.php') as $filename) {
+        $config = array_merge($config, require_once $filename);
     }
-    \configuration\$config = array();
-    if (!file_exists('../configuration/database.php')) {
-        exit('configuration/database.php is required');
-    } else {
-        foreach (glob('../configuration/*.php') as $filename) {
-            \configuration\$config = array_merge(\configuration\$config, require_once $filename);
-        }
-    }
-    return \configuration\$config;
+    return $config;   
 }
 
 function connect($data) {
     extract(\configuration\load());
+    if (empty($dsn) || empty($user) || empty($password) || empty($frozen)) {
+        die("Please check the configuration\database.php file");
+    }
 	R::addDatabase('db',$dsn,$user,$password,$frozen);
     R::selectDatabase('db');
 }
