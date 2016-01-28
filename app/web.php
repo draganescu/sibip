@@ -34,10 +34,19 @@ function render($view) {
 }
 
 function index_page() {
+	$config = \configuration\load();
+	$registration = \app\run('input', 'post', 'email');
 
-	if (\app\run('input', 'post', 'email')) {
+	if ($registration) {
 		$string = \app\run('input', 'generateRandomString', 10);
-		echo $string;
+		$mg = new Mailgun($config['key']);
+		$domain = "code.andreidraganescu.info";
+
+		# Now, compose and send your message.
+		$mg->sendMessage($domain, array('from'    => 'sibip@code.andreidraganescu.info', 
+		                                'to'      => $registration, 
+		                                'subject' => 'sibip#confirmation', 
+		                                'text'    => 'It is so simple to send a message. ' . $string));
 		die;
 	}
 
