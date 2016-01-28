@@ -9,7 +9,7 @@ function serve($data) {
 
 function render() {
 	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates';
-	$layout = $path..DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'layout.phtml';
+	$layout = $path.DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'layout.phtml';
 	
 	include $layout;
 }
