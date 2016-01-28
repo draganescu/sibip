@@ -8,12 +8,10 @@ function run($action = null, $command = null, $data = null) {
 
     if (is_null($action) && is_null($command) && is_null($data)) {
         if (run('input', 'get', 'api')) {
-            run ('api', 'handle');
+            return run ('api', 'handle');
         } else {
-            run('web', 'serve');
+            return run('web', 'serve');
         }
-
-        exit;
     }
 
     $function = "\\".$action."\\".$command;
@@ -27,7 +25,7 @@ function run($action = null, $command = null, $data = null) {
     }
 
     if (function_exists($function)) {
-        $function($data);
+        return $function($data);
     } else {
         die('Undefined command '.$function);
     }

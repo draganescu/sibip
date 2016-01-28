@@ -15,7 +15,7 @@ function verify_signature()
     die('nope');
 }
 
-function handle() {
+function handle($data) {
 	\api\verify_signature();
     
     $command = \command\find();

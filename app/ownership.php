@@ -1,10 +1,10 @@
 <?php
 namespace ownership;
 
-function check() {
+function check($data) {
 	
 }
 
-function find() {
+function find($data) {
 	
 }
