@@ -4,6 +4,7 @@ use \RedBeanPHP\R;
 use \Mailgun\Mailgun;
 
 function find() {
+	$actions = array('status');
 	$action = null;
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
