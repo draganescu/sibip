@@ -14,10 +14,11 @@ function load() {
 }
 
 function connect() {
-    extract(\configuration\load());
-    if (empty($dsn) || empty($user) || empty($password) || empty($frozen)) {
+    $config = \configuration\load());
+
+    if (empty($config['dsn']) || empty($config['user']) || empty($config['password']) || empty($config['frozen'])) {
         die("Please check the configuration\database.php file");
     }
-	R::addDatabase('db',$dsn,$user,$password,$frozen);
+	R::addDatabase('db',$config['dsn'],$config['user'],$config['password'],$config['frozen']);
     R::selectDatabase('db');
 }
