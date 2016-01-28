@@ -1,5 +1,5 @@
 <?php
 
 function serve($config) {
-    echo "it works!";
+    echo "it works, pushed";
 }
