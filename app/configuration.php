@@ -14,7 +14,7 @@ function load() {
 }
 
 function connect() {
-    $config = \configuration\load());
+    $config = \configuration\load();
 
     if (empty($config['dsn']) || empty($config['user']) || empty($config['password']) || empty($config['frozen'])) {
         die("Please check the configuration\database.php file");
