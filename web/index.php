@@ -1,6 +1,6 @@
 <?php 
 require '../vendor/autoload.php';
 require '../app/app.php';
-use app;
+use \app;
 
 \app\run();
