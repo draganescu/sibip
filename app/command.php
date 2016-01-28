@@ -1,7 +1,5 @@
 <?php
 namespace command;
-use \RedBeanPHP\R;
-use \Mailgun\Mailgun;
 
 function find() {
 	$actions = array('status');
@@ -9,9 +7,9 @@ function find() {
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
 		$tokens = explode(" ", $subject);
-		foreach ($actions as $key => $action) {
-			foreach ($tokens as $key => $token) {
-				if ($token == $action) {
+		foreach ($actions as $akey => $command) {
+			foreach ($tokens as $tkey => $token) {
+				if ($token == $command) {
 					return $action;
 				}
 			}
@@ -20,15 +18,30 @@ function find() {
 	return $action;
 }
 
-function store() {
-	$email = R::dispense('email');
-	foreach (\app\run('input', 'keys', 'post') as $key) {
-		$element = str_replace('-', '_', $key);
-		$email->$element = \app\run('input', 'post', $key);
+function call($command, $user) {
+	if (!empty($user)) {
+		$command_type = 'receiver';
+	} else {
+		$command_type = 'sender';
 	}
-	R::store($email);
+	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'commands';
+	$file = $path.DIRECTORY_SEPARATOR.$command_type.DIRECTORY_SEPARATOR.$command.'.php';
+
+	if (!file_exists($file)) {
+		exit('Command ' . $command . 'not implemented for '. $command_type);
+	}
+
+	include $file;
+
+	$function = "\\command\\".$command;
+
+	$result = $function();
+	
+	if (!empty($result)) {
+		\command\send($result, $command);
+	}
 }
 
-function call($command, $user) {
+function send($result, $command) {
 
 }
