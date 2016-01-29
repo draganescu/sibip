@@ -3,7 +3,7 @@ namespace command;
 use \Mailgun\Mailgun;
 
 function find() {
-	$actions = array('status', 'lolcat');
+	$actions = array('status', 'lolcat', 'vremea');
 	$action = null;
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
