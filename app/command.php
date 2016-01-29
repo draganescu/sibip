@@ -3,7 +3,7 @@ namespace command;
 use \Mailgun\Mailgun;
 
 function find() {
-	$actions = array('status');
+	$actions = array('status', 'lolcat');
 	$action = null;
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
@@ -53,6 +53,7 @@ function send($result, $command) {
 	$mg->sendMessage($domain, array('from'    => 'sibip@code.andreidraganescu.info', 
 	                                'to'      => \app\run('input', 'post', 'sender'),
 	                                'subject' => 'sibip#status', 
-	                                'text'    => $result
+	                                'text'    => strip_tags($result),
+	                                'html'    => $result,
 	                ));
 }
