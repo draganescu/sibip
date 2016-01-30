@@ -6,9 +6,12 @@ function handle($data) {
     \app\run('configuration', 'connect');
     
     $command = \app\run('command', 'find');
-    $user = \app\run('ownership', 'find'); // check if from or to is a user
-    if (!empty($user) && empty($command)) {
-        $command = 'store';
+    $user = \app\run('ownership', 'find');
+    if (empty($user)) {
+        $recipient = \app\run('ownership', 'check');
+        if(empty($recipient)) {
+            exit('Unknown user');
+        }
     }
     \app\run('command','call', array($command, $user));
 }

@@ -3,20 +3,18 @@ namespace command;
 use \Mailgun\Mailgun;
 
 function find() {
-	$actions = array('status', 'lolcat', 'vremea');
-	$action = null;
+	$config = \configuration\load();
+	$default = 'store';
+	$actions = $config['available_commands'];
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
-		$tokens = explode(" ", $subject);
 		foreach ($actions as $akey => $command) {
-			foreach ($tokens as $tkey => $token) {
-				if ($token == $command) {
-					return $command;
-				}
+			if ($command == $subject) {
+				return $command;
 			}
 		}
 	}
-	return $action;
+	return $default;
 }
 
 function call($command, $user) {
@@ -29,7 +27,7 @@ function call($command, $user) {
 	$file = $path.DIRECTORY_SEPARATOR.$command_type.DIRECTORY_SEPARATOR.$command.'.php';
 
 	if (!file_exists($file)) {
-		exit('Command ' . $command . 'not implemented for '. $command_type);
+		exit('Command ' . $command . ' not implemented for '. $command_type);
 	}
 
 	include $file;
@@ -39,11 +37,11 @@ function call($command, $user) {
 	$result = $function();
 
 	if (!empty($result)) {
-		\command\send($result, $command);
+		\command\send($result, $command, $command_type);
 	}
 }
 
-function send($result, $command) {
+function send($result, $command, $command_type) {
 	$config = \configuration\load();
 
 	$mg = new Mailgun($config['key']);
