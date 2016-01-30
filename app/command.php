@@ -37,21 +37,8 @@ function call($command, $user) {
 	$result = $function();
 
 	if (!empty($result)) {
-		\command\send($result, $command, $command_type);
+		\app\run('email', 'send', [$result, $command, $command_type]);
+	} else {
+		exit('nothing to send');
 	}
-}
-
-function send($result, $command, $command_type) {
-	$config = \configuration\load();
-
-	$mg = new Mailgun($config['key']);
-	$domain = "code.andreidraganescu.info";
-
-	# Now, compose and send your message.
-	$mg->sendMessage($domain, array('from'    => 'sibip@code.andreidraganescu.info', 
-	                                'to'      => \app\run('input', 'post', 'sender'),
-	                                'subject' => 'sibip#status', 
-	                                'text'    => strip_tags($result),
-	                                'html'    => $result,
-	                ));
 }
