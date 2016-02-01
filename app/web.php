@@ -36,12 +36,17 @@ function render($view) {
 }
 
 function index_page() {
+	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'templates';
+	$tpl_path = $path.DIRECTORY_SEPARATOR.'email'.DIRECTORY_SEPARATOR;
 	$config = \configuration\load();
-	$registration = \app\run('input', 'post', 'email');
 
+	$registration = \app\run('input', 'post', 'email');
 	if ($registration) {
 		$string = \app\run('input', 'generateRandomString', 10);
-		\app\run('email', 'send', [$result, $command, $command_type, $subject]);
+		$subject = '#'.$string.'#';
+		$result = ['code' => '#'.$string.'#'];
+		$template  = $tpl_path.'register.phtml';
+		\app\run('email', 'send', [$result, $template, $subject]);
 	}
 
 	return array(

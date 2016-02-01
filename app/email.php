@@ -2,11 +2,23 @@
 namespace email;
 
 function composeHTML($template, $data) {
-	return $data;
+
+	if (!is_array($data)) {
+		$data = ['data'=>$data];
+	}
+
+	ob_start();
+	extract($data);
+	include $template;
+	$html = ob_get_contents();
+	ob_end_clean();
+
+	return $html;
 }
 
 function composeText($data) {
-	return strip_tags($data);
+	$text = strip_tags($data);
+	return $text;
 }
 
 function send($result, $template, $subject = 'sibip') {
