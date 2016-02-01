@@ -7,12 +7,15 @@ function composeHTML($template, $data) {
 		$data = ['data'=>$data];
 	}
 
-	ob_start();
-	extract($data);
-	include $template;
-	$html = ob_get_contents();
-	ob_end_clean();
-
+	if (file_exists($template)) {
+		ob_start();
+		extract($data);
+		include $template;
+		$html = ob_get_contents();
+		ob_end_clean();
+	} else {
+		$html = $data;
+	}
 	return $html;
 }
 

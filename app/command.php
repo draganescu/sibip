@@ -24,7 +24,9 @@ function call($command, $user) {
 		$command_type = 'sender';
 	}
 	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'commands';
+	$tpl_path = $path.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$command_type;
 	$file = $path.DIRECTORY_SEPARATOR.$command_type.DIRECTORY_SEPARATOR.$command.'.php';
+	$template = $tpl_path.DIRECTORY_SEPARATOR.$command.'.php';
 
 	if (!file_exists($file)) {
 		exit('Command ' . $command . ' not implemented for '. $command_type);
