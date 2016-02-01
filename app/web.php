@@ -41,15 +41,7 @@ function index_page() {
 
 	if ($registration) {
 		$string = \app\run('input', 'generateRandomString', 10);
-		$mg = new Mailgun($config['key']);
-		$domain = "code.andreidraganescu.info";
-
-		# Now, compose and send your message.
-		$mg->sendMessage($domain, array('from'    => 'sibip@code.andreidraganescu.info', 
-		                                'to'      => $registration, 
-		                                'subject' => 'sibip#confirmation', 
-		                                'text'    => 'It is so simple to send a message. ' . $string));
-		die;
+		\app\run('email', 'send', [$result, $command, $command_type, $subject]);
 	}
 
 	return array(

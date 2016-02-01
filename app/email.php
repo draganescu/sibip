@@ -1,7 +1,7 @@
 <?php
 namespace email;
 
-function composeHTML($command, $command_type, $data) {
+function composeHTML($template, $data) {
 	return $data;
 }
 
@@ -9,7 +9,7 @@ function composeText($data) {
 	return strip_tags($data);
 }
 
-function send($result, $command, $command_type) {
+function send($result, $template, $subject = 'sibip') {
 	$config = \configuration\load();
 
 	$mg = new Mailgun($config['key']);
@@ -19,8 +19,8 @@ function send($result, $command, $command_type) {
 	$mg->sendMessage($domain, 
 			array('from'    => 'sibip@code.andreidraganescu.info', 
 	                'to'      => \app\run('input', 'post', 'sender'),
-                    'subject' => 'sibip#status', 
+                    'subject' => $subject, 
                     'text'    => \email\composeText($result),
-                    'html'    => \email\composeHTML($command, $command_type, $result),
+                    'html'    => \email\composeHTML($template, $result),
             ));
 }

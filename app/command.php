@@ -37,7 +37,7 @@ function call($command, $user) {
 	$result = $function();
 
 	if (!empty($result)) {
-		\app\run('email', 'send', [$result, $command, $command_type]);
+		\app\run('email', 'send', [$template, $result]);
 	} else {
 		exit('nothing to send');
 	}
