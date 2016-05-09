@@ -8,7 +8,7 @@ function find() {
 	$actions = $config['available_commands'];
 	$subject = \app\run('input', 'post', 'subject');
 	if(!empty($subject)) {
-		foreach ($actions as $akey => $command) {
+		foreach ($actions as $command) {
 			if ($command == $subject) {
 				return $command;
 			}
@@ -18,6 +18,7 @@ function find() {
 }
 
 function call($command, $user) {
+	\app\log('calling func');
 	if (!empty($user)) {
 		$command_type = 'receiver';
 	} else {
@@ -26,21 +27,28 @@ function call($command, $user) {
 	$path = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'commands';
 	$tpl_path = $path.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.$command_type;
 	$file = $path.DIRECTORY_SEPARATOR.$command_type.DIRECTORY_SEPARATOR.$command.'.php';
-	$template = $tpl_path.DIRECTORY_SEPARATOR.$command.'.php';
+	$template = $tpl_path.DIRECTORY_SEPARATOR.$command.'.phtml';
+
+	\app\log($file);
 
 	if (!file_exists($file)) {
+		\app\log('Command ' . $command . ' not implemented for '. $command_type);
 		exit('Command ' . $command . ' not implemented for '. $command_type);
 	}
 
 	include $file;
+	\app\log($file);
 
 	$function = "\\command\\".$command;
 
 	$result = $function();
+	\app\log($result);
 
 	if (!empty($result)) {
-		\app\run('email', 'send', [$template, $result]);
+		\app\log('sending');
+		\app\run('email', 'send', array($result, $template));
 	} else {
+		\app\log('nothing to send');
 		exit('nothing to send');
 	}
 }

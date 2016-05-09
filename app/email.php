@@ -2,9 +2,8 @@
 namespace email;
 
 function composeHTML($template, $data) {
-
 	if (!is_array($data)) {
-		$data = ['data'=>$data];
+		$data = array('data'=>$data);
 	}
 
 	if (file_exists($template)) {
@@ -14,7 +13,7 @@ function composeHTML($template, $data) {
 		$html = ob_get_contents();
 		ob_end_clean();
 	} else {
-		$html = $data;
+		$html = $data['data'];
 	}
 	return $html;
 }
@@ -25,17 +24,19 @@ function composeText($data) {
 }
 
 function send($result, $template, $subject = 'sibip') {
+	\app\log('sending prep');
 	$config = \configuration\load();
 
-	$mg = new Mailgun($config['key']);
+	$mailgun = new \Mailgun\Mailgun($config['key']);
 	$domain = $config['domain'];
 
-	# Now, compose and send your message.
-	$mg->sendMessage($domain, 
+	\app\log('composed');
+	$mailgun->sendMessage($domain, 
 			array('from'    => 'sibip@code.andreidraganescu.info', 
 	                'to'      => \app\run('input', 'post', 'sender'),
                     'subject' => $subject, 
                     'text'    => \email\composeText($result),
                     'html'    => \email\composeHTML($template, $result),
-            ));
+            )
+	);
 }
